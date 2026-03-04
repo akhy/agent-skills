@@ -1,4 +1,7 @@
 # agent-skills
+
+[![Skills Validation](https://github.com/akhy/agent-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/akhy/agent-skills/actions/workflows/validate.yml)
+
 LLM agent skills collection by [@akhy](https://github.com/akhy).
 
 ## Usage
