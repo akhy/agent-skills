@@ -29,3 +29,4 @@ npx skills add akhy/agent-skills --list
 | Skill | Description |
 |-------|-------------|
 | [fizzy-workflow](./fizzy-workflow/SKILL.md) | High-level workflows for managing work using Fizzy cards (start, work on, complete, delegate) |
+| [memos](./memos/SKILL.md) | Create, list, update, delete memos and manage comments, reactions, attachments, and relations via the Memos REST API |
