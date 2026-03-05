@@ -2,6 +2,8 @@
 name: memos
 description: Manage memos using a self-hosted Memos instance — create, list, update, delete memos, post comments, manage reactions, attachments, and relations via the Memos REST API.
 compatibility: Requires curl and jq in PATH. Set MEMOS_URL and MEMOS_ACCESS_TOKEN env vars before use.
+metadata:
+  upstream: https://usememos.com
 ---
 
 # Memos Skill
