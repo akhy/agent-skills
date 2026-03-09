@@ -36,6 +36,7 @@ from requests_oauthlib import OAuth1Session
 
 BASE_URL = "https://www.plurk.com"
 TIMELINE_API = "/APP/Timeline/getPlurks"
+PAGE_LIMIT = 50
 
 
 def parse_go_duration(s: str) -> timedelta:
@@ -92,7 +93,7 @@ def get_session() -> OAuth1Session:
 
 
 def fetch_timeline_page(session: OAuth1Session, offset: str | None) -> dict:
-    params = {"limit": 30}
+    params = {"limit": PAGE_LIMIT}
     if offset:
         params["offset"] = offset
     resp = session.get(f"{BASE_URL}{TIMELINE_API}", params=params)
@@ -140,7 +141,7 @@ def fetch_since(session: OAuth1Session, since: timedelta) -> tuple[list[dict], d
         offset = oldest_plurk["posted"]
 
         # Safety: stop if we got fewer results than requested
-        if len(plurks) < 30:
+        if len(plurks) < PAGE_LIMIT:
             break
 
     return all_plurks, all_users
@@ -176,11 +177,11 @@ def format_trending(plurks: list[dict], users: dict, top: int, min_responses: in
         nick_name = user.get("nick_name", "")
 
         posted_dt = parse_posted(p["posted"])
-        posted_local = posted_dt.astimezone().strftime("%Y-%m-%d %H:%M:%S %Z")
         result.append({
             "plurk_id": p["plurk_id"],
             "permalink": permalink(p["plurk_id"]),
-            "posted": f"{posted_local} ({relative_time(posted_dt)})",
+            "posted": p["posted"],
+            "posted_formatted": f"{posted_dt.astimezone().strftime('%Y-%m-%d %H:%M:%S %Z')} ({relative_time(posted_dt)})",
             "plurker": f"{display_name} (@{nick_name})" if nick_name else display_name,
             "qualifier": p.get("qualifier", ""),
             "content_raw": p.get("content_raw", ""),
