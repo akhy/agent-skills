@@ -92,6 +92,37 @@ uv run plurk/scripts/plurk.py respond 12345 says "Great post!"
 
 **Response:** `{ "id": N, "content": "...", "qualifier": "...", "qualifier_translated": "..." }`
 
+## Plurk Permalink
+
+Each plurk has a public permalink. The `plurk_id` from the API is an integer — convert it to base36 to build the URL:
+
+```
+https://www.plurk.com/p/<plurk_id in base36>
+```
+
+**Python:**
+```python
+import numpy  # not needed — use built-in
+def to_base36(n):
+    digits = "0123456789abcdefghijklmnopqrstuvwxyz"
+    result = ""
+    while n:
+        result = digits[n % 36] + result
+        n //= 36
+    return result or "0"
+
+permalink = f"https://www.plurk.com/p/{to_base36(plurk_id)}"
+```
+
+**jq (requires external base conversion):**
+```bash
+# Extract plurk_id and build permalink via Python one-liner
+uv run plurk/scripts/plurk.py get-plurk 12345 \
+  | jq '.plurks.plurk_id' \
+  | python3 -c "import sys; n=int(sys.stdin.read()); d='0123456789abcdefghijklmnopqrstuvwxyz'; r=''; \
+    exec(\"while n: r=d[n%36]+r; n//=36\"); print(f'https://www.plurk.com/p/{r or 0}')"
+```
+
 ## Rendering Avatars
 
 User objects returned by the API include `id`, `has_profile_image`, and `avatar` fields. Use these to construct avatar URLs:
