@@ -3,7 +3,28 @@ name: buffer
 description: Manage Buffer social media posts and ideas — create and schedule posts to connected channels, manage the post queue, and create ideas in the Buffer Create space. Supports all Buffer-connected services (Instagram, Twitter/X, Facebook, LinkedIn, TikTok, Pinterest, YouTube, Mastodon, Bluesky, Threads, Google Business).
 compatibility: Requires curl and jq in PATH. Set BUFFER_API_KEY env var before use.
 metadata:
-  upstream: https://buffer.com
+  {
+    "author": "akhy",
+    "version": "1.0.0",
+    "upstream": "https://buffer.com",
+    "openclaw":
+      {
+        "emoji": "📱",
+        "homepage": "https://buffer.com",
+        "requires": { "bins": ["curl", "jq"], "env": ["BUFFER_API_KEY"] },
+        "primaryEnv": "BUFFER_API_KEY",
+        "install":
+          [
+            {
+              "id": "brew-jq",
+              "kind": "brew",
+              "formula": "jq",
+              "bins": ["jq"],
+              "label": "Install jq (brew)",
+            },
+          ],
+      },
+  }
 ---
 
 # Buffer Skill

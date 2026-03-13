@@ -2,6 +2,34 @@
 name: fizzy-workflow
 description: High-level workflows for managing work using Fizzy cards — start, work on, complete, and delegate cards using the Fizzy CLI.
 compatibility: Requires fizzy and jq in PATH. Install fizzy from https://github.com/basecamp/fizzy-cli/releases (single-file binary). Install jq via package manager (brew install jq / apt install jq).
+metadata:
+  {
+    "author": "akhy",
+    "version": "1.0.0",
+    "openclaw":
+      {
+        "emoji": "🃏",
+        "homepage": "https://github.com/basecamp/fizzy-cli",
+        "requires": { "bins": ["fizzy", "jq"] },
+        "install":
+          [
+            {
+              "id": "download-fizzy",
+              "kind": "download",
+              "url": "https://github.com/basecamp/fizzy-cli/releases",
+              "bins": ["fizzy"],
+              "label": "Download Fizzy CLI",
+            },
+            {
+              "id": "brew-jq",
+              "kind": "brew",
+              "formula": "jq",
+              "bins": ["jq"],
+              "label": "Install jq (brew)",
+            },
+          ],
+      },
+  }
 ---
 
 # Fizzy Workflow Skill

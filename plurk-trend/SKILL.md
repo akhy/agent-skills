@@ -3,8 +3,29 @@ name: plurk-trend
 description: Show trending plurks from the last 24 hours — top plurks ranked by number of responses, descending. Builds on the plurk skill. Useful for discovering popular or viral content on Plurk.
 compatibility: Requires uv in PATH. Set PLURK_APP_KEY, PLURK_APP_SECRET, PLURK_AUTH_TOKEN, PLURK_AUTH_SECRET env vars before use. See the plurk skill for credential setup.
 metadata:
-  upstream: https://www.plurk.com
-  depends-on: plurk
+  {
+    "author": "akhy",
+    "version": "1.0.0",
+    "upstream": "https://www.plurk.com",
+    "depends-on": "plurk",
+    "openclaw":
+      {
+        "emoji": "📈",
+        "homepage": "https://www.plurk.com",
+        "requires": { "bins": ["uv"], "env": ["PLURK_APP_KEY", "PLURK_APP_SECRET", "PLURK_AUTH_TOKEN", "PLURK_AUTH_SECRET"] },
+        "primaryEnv": "PLURK_APP_KEY",
+        "install":
+          [
+            {
+              "id": "brew-uv",
+              "kind": "brew",
+              "formula": "uv",
+              "bins": ["uv"],
+              "label": "Install uv (brew)",
+            },
+          ],
+      },
+  }
 ---
 
 # Plurk Trend Skill

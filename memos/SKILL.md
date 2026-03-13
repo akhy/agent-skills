@@ -3,7 +3,28 @@ name: memos
 description: Manage memos using a self-hosted Memos instance — create, list, update, delete memos, post comments, manage reactions, attachments, and relations via the Memos REST API.
 compatibility: Requires curl and jq in PATH. Set MEMOS_URL and MEMOS_ACCESS_TOKEN env vars before use.
 metadata:
-  upstream: https://usememos.com
+  {
+    "author": "akhy",
+    "version": "1.0.0",
+    "upstream": "https://usememos.com",
+    "openclaw":
+      {
+        "emoji": "📝",
+        "homepage": "https://usememos.com",
+        "requires": { "bins": ["curl", "jq"], "env": ["MEMOS_URL", "MEMOS_ACCESS_TOKEN"] },
+        "primaryEnv": "MEMOS_ACCESS_TOKEN",
+        "install":
+          [
+            {
+              "id": "brew-jq",
+              "kind": "brew",
+              "formula": "jq",
+              "bins": ["jq"],
+              "label": "Install jq (brew)",
+            },
+          ],
+      },
+  }
 ---
 
 # Memos Skill

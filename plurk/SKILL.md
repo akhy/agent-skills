@@ -3,7 +3,28 @@ name: plurk
 description: Read and respond to Plurk social network content — fetch your timeline, get individual plurks, view another user's public plurks, read responses to a plurk, and post responses. Requires OAuth credentials.
 compatibility: Requires uv in PATH (for running the Python script). Set PLURK_APP_KEY, PLURK_APP_SECRET, PLURK_AUTH_TOKEN, PLURK_AUTH_SECRET env vars before use.
 metadata:
-  upstream: https://www.plurk.com
+  {
+    "author": "akhy",
+    "version": "1.0.0",
+    "upstream": "https://www.plurk.com",
+    "openclaw":
+      {
+        "emoji": "💬",
+        "homepage": "https://www.plurk.com",
+        "requires": { "bins": ["uv"], "env": ["PLURK_APP_KEY", "PLURK_APP_SECRET", "PLURK_AUTH_TOKEN", "PLURK_AUTH_SECRET"] },
+        "primaryEnv": "PLURK_APP_KEY",
+        "install":
+          [
+            {
+              "id": "brew-uv",
+              "kind": "brew",
+              "formula": "uv",
+              "bins": ["uv"],
+              "label": "Install uv (brew)",
+            },
+          ],
+      },
+  }
 ---
 
 # Plurk Skill

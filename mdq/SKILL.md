@@ -2,6 +2,27 @@
 name: mdq
 description: Query and filter Markdown documents using jq-like selector syntax — extract headings, list items, tasks, links, images, tables, code blocks, blockquotes, and paragraphs from markdown files. Useful for parsing README files, docs, changelogs, and any structured markdown.
 compatibility: Requires mdq in PATH. Install via brew or download binary from GitHub releases.
+metadata:
+  {
+    "author": "akhy",
+    "version": "1.0.0",
+    "openclaw":
+      {
+        "emoji": "🔍",
+        "homepage": "https://github.com/yshavit/mdq",
+        "requires": { "bins": ["mdq"] },
+        "install":
+          [
+            {
+              "id": "brew-mdq",
+              "kind": "brew",
+              "formula": "mdq",
+              "bins": ["mdq"],
+              "label": "Install mdq (brew)",
+            },
+          ],
+      },
+  }
 ---
 
 # mdq Skill
