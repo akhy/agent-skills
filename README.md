@@ -28,5 +28,9 @@ npx skills add akhy/agent-skills --list
 
 | Skill | Description |
 |-------|-------------|
+| [buffer](./buffer/SKILL.md) | Manage Buffer social media posts and ideas — create, schedule, and queue posts across all connected channels |
 | [fizzy-workflow](./fizzy-workflow/SKILL.md) | High-level workflows for managing work using Fizzy cards (start, work on, complete, delegate) |
+| [mdq](./mdq/SKILL.md) | Query and filter Markdown documents using jq-like selector syntax |
 | [memos](./memos/SKILL.md) | Create, list, update, delete memos and manage comments, reactions, attachments, and relations via the Memos REST API |
+| [plurk](./plurk/SKILL.md) | Read and respond to Plurk social network content — timeline, plurks, responses, and posting |
+| [plurk-trend](./plurk-trend/SKILL.md) | Show trending plurks from the last 24 hours ranked by number of responses |
