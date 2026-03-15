@@ -35,3 +35,4 @@ npx skills add akhy/agent-skills --list
 | [plurk](./plurk/SKILL.md) | Read and respond to Plurk social network content — timeline, plurks, responses, and posting |
 | [plurk-trend](./plurk-trend/SKILL.md) | Show trending plurks from the last 24 hours ranked by number of responses |
 | [go-release](./go-release/SKILL.md) | Set up automated releases for Go CLI apps using GoReleaser, GitHub Actions, GHCR, and Homebrew tap |
+| [agent-friendly-cli](./agent-friendly-cli/SKILL.md) | Author or audit AI agent-friendly CLI tools — structured output, exit codes, idempotency, dry-run, and more |
