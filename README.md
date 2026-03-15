@@ -34,3 +34,4 @@ npx skills add akhy/agent-skills --list
 | [memos](./memos/SKILL.md) | Create, list, update, delete memos and manage comments, reactions, attachments, and relations via the Memos REST API |
 | [plurk](./plurk/SKILL.md) | Read and respond to Plurk social network content — timeline, plurks, responses, and posting |
 | [plurk-trend](./plurk-trend/SKILL.md) | Show trending plurks from the last 24 hours ranked by number of responses |
+| [go-release](./go-release/SKILL.md) | Set up automated releases for Go CLI apps using GoReleaser, GitHub Actions, GHCR, and Homebrew tap |
