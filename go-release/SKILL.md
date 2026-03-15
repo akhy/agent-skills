@@ -1,6 +1,6 @@
 ---
 name: go-release
-description: Set up automated releases for Go CLI apps using GoReleaser, GitHub Actions, GHCR (Docker), and Homebrew tap. Use when the user wants to add release automation, Dockerfile, or Homebrew distribution to a Go project. Keywords: goreleaser, github releases, ghcr, homebrew, docker, release, go, golang, binary distribution.
+description: Set up automated releases for Go CLI apps using GoReleaser, GitHub Actions, GHCR (Docker), and Homebrew tap. Use when the user wants to add release automation, Dockerfile, or Homebrew distribution to a Go project.
 compatibility: Requires go and git in PATH. Project must have a go.mod file.
 metadata:
   {
@@ -10,6 +10,7 @@ metadata:
       {
         "emoji": "🚀",
         "homepage": "https://goreleaser.com",
+        "keywords": ["goreleaser", "github releases", "ghcr", "homebrew", "docker", "release", "go", "golang", "binary distribution"],
         "requires": { "bins": ["go", "git"] },
         "install":
           [

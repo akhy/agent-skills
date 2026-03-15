@@ -1,6 +1,6 @@
 ---
 name: agent-friendly-cli
-description: Author or audit AI agent-friendly CLI tools. Use when creating a new CLI, reviewing an existing CLI for agent compatibility, or deciding between CLI and MCP. Keywords: cli, command-line, agent, ai, structured output, json, exit codes, idempotent, dry-run, audit, review.
+description: Author or audit AI agent-friendly CLI tools. Use when creating a new CLI, reviewing an existing CLI for agent compatibility, or deciding between CLI and MCP.
 metadata:
   {
     "author": "akhy",
@@ -9,6 +9,7 @@ metadata:
       {
         "emoji": "🤖",
         "homepage": "https://github.com/akhy/agent-skills",
+        "keywords": ["cli", "command-line", "agent", "ai", "structured output", "json", "exit codes", "idempotent", "dry-run", "audit", "review"],
         "requires": { "bins": [] },
         "install": [],
       },
