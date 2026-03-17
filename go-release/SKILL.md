@@ -34,7 +34,7 @@ Sets up release infrastructure for Go CLI apps: GoReleaser config, Dockerfile, a
 
 Read `go.mod` to infer:
 - **Module path** (e.g. `github.com/owner/repo`)
-- **Go version**
+- **Go version** — use the version from the `go` directive in `go.mod` if present; if `go.mod` doesn't exist or has no `go` directive, fetch the current latest stable Go version from `https://go.dev/VERSION?m=text` and use that
 - **Binary name** — check `cmd/` subdirectories; if multiple, ask which one(s) to release; if absent, use the last segment of the module path
 
 Derive `<github-owner>` and `<github-repo>` from the module path.
