@@ -50,6 +50,66 @@ This skill also depends on the **base `fizzy` skill** for raw Fizzy CLI operatio
 
 ## Workflows
 
+### 0. Planning Cards (optional)
+
+**When:** Breaking down a larger task into multiple cards before starting work
+
+**Steps:**
+1. Write a JSON plan file describing all cards and their steps
+2. Validate with `--dry-run` before creating
+3. Run the plan to create all cards in one invocation
+4. Then pick a card and follow the Start Card workflow
+
+**Plan file format:**
+```json
+{
+  "board_id": "<board_id>",
+  "cards": [
+    {
+      "title": "Card title",
+      "description": "Optional description (markdown or HTML)",
+      "steps": [
+        "Step one",
+        "Step two"
+      ]
+    }
+  ]
+}
+```
+
+`description` and `steps` are optional per card.
+
+**Example:**
+```bash
+# Dry-run first to verify
+python3 fizzy-workflow/scripts/fizzy-plan-create.py plan.json --dry-run
+
+# Create all cards
+python3 fizzy-workflow/scripts/fizzy-plan-create.py plan.json
+```
+
+**Output (agent-friendly JSON):**
+```json
+{
+  "ok": true,
+  "dry_run": false,
+  "created": [
+    {"number": 42, "title": "Card title", "steps_created": 2}
+  ]
+}
+```
+
+On failure (e.g. mid-way through), `partial` is included so the agent knows what was already created:
+```json
+{
+  "ok": false,
+  "error": "step create failed: ...",
+  "partial": {"number": 42, "title": "Card title", "steps_created": 1}
+}
+```
+
+---
+
 ### 1. Starting a Card
 
 **When:** Beginning work on a new card
@@ -408,6 +468,14 @@ fizzy comment create --card 12 --body "<p>✅ Steps 1-3 complete</p>"
 ---
 
 ## Helper Scripts
+
+### `scripts/fizzy-plan-create.py <plan.json> [--dry-run]`
+Create multiple cards with steps from a JSON plan file in a single invocation. Use `--dry-run` to validate the plan before executing. Outputs JSON with created card numbers.
+
+```bash
+python3 fizzy-workflow/scripts/fizzy-plan-create.py plan.json --dry-run
+python3 fizzy-workflow/scripts/fizzy-plan-create.py plan.json
+```
 
 ### `scripts/fizzy-context.sh <board_id>`
 Get column IDs and git remote for a board — run this before starting a card to look up the "Doing" column ID.
