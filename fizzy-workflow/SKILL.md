@@ -32,8 +32,11 @@ High-level workflows for managing work using Fizzy cards. This skill builds on t
 ## Prerequisites
 
 - **`fizzy`** — Fizzy CLI binary. Download from [github.com/basecamp/fizzy-cli/releases](https://github.com/basecamp/fizzy-cli/releases) and place in your PATH.
+- **`jq`** (optional) — Required as fallback if fizzy's built-in `--jq` flag is unavailable (currently unreleased). Install via `brew install jq` or `apt install jq`.
 
 This skill also depends on the **base `fizzy` skill** for raw Fizzy CLI operations. If not already installed, install it from [github.com/basecamp/fizzy-cli/tree/master/skills/fizzy](https://github.com/basecamp/fizzy-cli/tree/master/skills/fizzy).
+
+> **Note on `--jq` flag:** Examples in this skill use fizzy's built-in `--jq` filter flag, which is currently unreleased. Helper scripts fall back to external `jq` automatically. For inline patterns, replace `fizzy ... --jq 'EXPR'` with `fizzy ... --json | jq 'EXPR'` if needed.
 
 ---
 

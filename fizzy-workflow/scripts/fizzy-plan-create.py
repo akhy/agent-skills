@@ -67,13 +67,14 @@ def main():
             log(f"[dry-run] {title!r} ({len(steps)} steps)")
             continue
 
-        cmd = ["fizzy", "card", "create", "--board", board_id, "--title", title, "--jq", ".data.number"]
+        cmd = ["fizzy", "card", "create", "--board", board_id, "--title", title, "--json"]
         if description:
             cmd += ["--description", description]
 
         try:
-            number = json.loads(run(cmd))
-        except (RuntimeError, json.JSONDecodeError) as e:
+            data = json.loads(run(cmd))
+            number = data["data"]["number"]
+        except (RuntimeError, json.JSONDecodeError, KeyError) as e:
             fail(f"card create failed: {e}")
 
         steps_created = 0
