@@ -36,7 +36,7 @@ High-level workflows for managing work using Fizzy cards. This skill builds on t
 
 This skill also depends on the **base `fizzy` skill** for raw Fizzy CLI operations. If not already installed, install it from [github.com/basecamp/fizzy-cli/tree/master/skills/fizzy](https://github.com/basecamp/fizzy-cli/tree/master/skills/fizzy).
 
-> **Note on `--jq` flag:** Examples in this skill use fizzy's built-in `--jq` filter flag, which is currently unreleased. Helper scripts fall back to external `jq` automatically. For inline patterns, replace `fizzy ... --jq 'EXPR'` with `fizzy ... --json | jq 'EXPR'` if needed.
+> **Note on `--jq` flag:** Examples in this skill use fizzy's built-in `--jq` filter flag, which is currently unreleased. Helper scripts fall back to external `jq` automatically. The fizzy CLI outputs JSON by default — no output format flag is needed. For inline patterns, replace `fizzy ... --jq 'EXPR'` with `fizzy ... | jq 'EXPR'` if needed.
 
 ---
 

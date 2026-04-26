@@ -13,7 +13,7 @@ fizzy_jq() {
     if [ $rc -eq 0 ]; then
         echo "$out"
     elif echo "$out" | grep -qi "unknown flag\|flag provided but not defined"; then
-        fizzy "$@" --json | jq "$filter"
+        fizzy "$@" | jq "$filter"
     else
         echo "$out" >&2
         return $rc

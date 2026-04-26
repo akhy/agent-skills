@@ -67,7 +67,7 @@ def main():
             log(f"[dry-run] {title!r} ({len(steps)} steps)")
             continue
 
-        cmd = ["fizzy", "card", "create", "--board", board_id, "--title", title, "--json"]
+        cmd = ["fizzy", "card", "create", "--board", board_id, "--title", title]
         if description:
             cmd += ["--description", description]
 
