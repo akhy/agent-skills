@@ -60,11 +60,12 @@ def main():
             fail(f"cards[{i}] missing title")
 
         description = card.get("description", "")
+        tags = card.get("tags") or []
         steps = card.get("steps") or []
 
         if args.dry_run:
-            created.append({"title": title, "steps": steps})
-            log(f"[dry-run] {title!r} ({len(steps)} steps)")
+            created.append({"title": title, "tags": tags, "steps": steps})
+            log(f"[dry-run] {title!r} (tags: {tags}, {len(steps)} steps)")
             continue
 
         cmd = ["fizzy", "card", "create", "--board", board_id, "--title", title]
@@ -77,6 +78,12 @@ def main():
         except (RuntimeError, json.JSONDecodeError, KeyError) as e:
             fail(f"card create failed: {e}")
 
+        for tag in tags:
+            try:
+                run(["fizzy", "card", "tag", str(number), "--tag", tag])
+            except RuntimeError as e:
+                fail(f"tag failed: {e}", partial={"number": number, "title": title, "steps_created": 0})
+
         steps_created = 0
         for step in steps:
             try:
@@ -85,8 +92,8 @@ def main():
             except RuntimeError as e:
                 fail(f"step create failed: {e}", partial={"number": number, "title": title, "steps_created": steps_created})
 
-        created.append({"number": number, "title": title, "steps_created": steps_created})
-        log(f"#{number} {title!r} ({steps_created} steps)")
+        created.append({"number": number, "title": title, "tags": tags, "steps_created": steps_created})
+        log(f"#{number} {title!r} (tags: {tags}, {steps_created} steps)")
 
     print(json.dumps({"ok": True, "dry_run": args.dry_run, "created": created}))
 

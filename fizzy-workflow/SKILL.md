@@ -71,6 +71,7 @@ This skill also depends on the **base `fizzy` skill** for raw Fizzy CLI operatio
     {
       "title": "Card title",
       "description": "Optional description (markdown or HTML)",
+      "tags": ["backend", "urgent"],
       "steps": [
         "Step one",
         "Step two"
@@ -80,7 +81,7 @@ This skill also depends on the **base `fizzy` skill** for raw Fizzy CLI operatio
 }
 ```
 
-`description` and `steps` are optional per card.
+`description`, `tags`, and `steps` are optional per card. Before assigning tags, run `fizzy tag list` to see existing ones — **prefer reusing existing tags** over creating new ones to avoid duplicates.
 
 **Example:**
 ```bash
@@ -97,7 +98,7 @@ python3 fizzy-workflow/scripts/fizzy-plan-create.py plan.json
   "ok": true,
   "dry_run": false,
   "created": [
-    {"number": 42, "title": "Card title", "steps_created": 2}
+    {"number": 42, "title": "Card title", "tags": ["backend"], "steps_created": 2}
   ]
 }
 ```
@@ -356,12 +357,15 @@ EOF
 - Assign appropriately (self vs human)
 - Close cards when truly complete
 - Update steps as you progress
+- Add relevant tags to cards for discoverability
+- Run `fizzy tag list` and reuse existing tags before creating new ones
 
 ❌ **DON'T:**
 - Leave cards in wrong columns
 - Close cards with incomplete work
 - Forget to assign cards
 - Skip step updates
+- Create duplicate or near-duplicate tags
 
 ---
 
