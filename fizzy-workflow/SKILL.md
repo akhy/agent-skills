@@ -1,16 +1,16 @@
 ---
 name: fizzy-workflow
 description: High-level workflows for managing work using Fizzy cards — start, work on, complete, and delegate cards using the Fizzy CLI.
-compatibility: Requires fizzy and jq in PATH. Install fizzy from https://github.com/basecamp/fizzy-cli/releases (single-file binary). Install jq via package manager (brew install jq / apt install jq).
+compatibility: Requires fizzy in PATH. Install fizzy from https://github.com/basecamp/fizzy-cli/releases (single-file binary).
 metadata:
   {
     "author": "akhy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "openclaw":
       {
         "emoji": "🃏",
         "homepage": "https://github.com/basecamp/fizzy-cli",
-        "requires": { "bins": ["fizzy", "jq"] },
+        "requires": { "bins": ["fizzy"] },
         "install":
           [
             {
@@ -19,13 +19,6 @@ metadata:
               "url": "https://github.com/basecamp/fizzy-cli/releases",
               "bins": ["fizzy"],
               "label": "Download Fizzy CLI",
-            },
-            {
-              "id": "brew-jq",
-              "kind": "brew",
-              "formula": "jq",
-              "bins": ["jq"],
-              "label": "Install jq (brew)",
             },
           ],
       },
@@ -38,10 +31,7 @@ High-level workflows for managing work using Fizzy cards. This skill builds on t
 
 ## Prerequisites
 
-The following must be available in `PATH`:
-
 - **`fizzy`** — Fizzy CLI binary. Download from [github.com/basecamp/fizzy-cli/releases](https://github.com/basecamp/fizzy-cli/releases) and place in your PATH.
-- **`jq`** — JSON processor. Install via `brew install jq` or `apt install jq`.
 
 This skill also depends on the **base `fizzy` skill** for raw Fizzy CLI operations. If not already installed, install it from [github.com/basecamp/fizzy-cli/tree/master/skills/fizzy](https://github.com/basecamp/fizzy-cli/tree/master/skills/fizzy).
 
@@ -72,7 +62,7 @@ This skill also depends on the **base `fizzy` skill** for raw Fizzy CLI operatio
    - It's acceptable to work on multiple cards in the same branch, but each card **must be committed separately**
 3. Find "Doing" column ID: `fizzy column list --board BOARD_ID`
 4. Move to "Doing" column: `fizzy card column CARD_NUMBER --column <doing_column_id>`
-5. Assign to bot/self: `fizzy card assign CARD_NUMBER --user <bot_user_id>`
+5. Assign to self: `fizzy card self-assign CARD_NUMBER`
 
 **Example:**
 ```bash
@@ -86,13 +76,13 @@ git checkout -b feat/short-description
 # If on a feature branch that may not be relevant: STOP and confirm with user
 
 # Get column IDs
-fizzy column list --board BOARD_ID | jq '.data[] | {id: .id, name: .name}'
+fizzy column list --board BOARD_ID --jq '[.data[] | {id, name}]'
 
 # Move to Doing
 fizzy card column 15 --column <doing_column_id>
 
-# Assign to bot
-fizzy card assign 15 --user <bot_user_id>
+# Assign to self
+fizzy card self-assign 15
 ```
 
 **What to tell the user:**
@@ -239,7 +229,7 @@ fizzy card close CARD_NUMBER
 **How to find human user ID:**
 ```bash
 # List all users to find the right person
-fizzy user list | jq '.data[] | {id: .id, name: .name, email: .email_address}'
+fizzy user list --jq '[.data[] | {id, name, email: .email_address}]'
 ```
 
 **Assign:**
@@ -296,7 +286,7 @@ EOF
 ### Card Management
 ✅ **DO:**
 - Move cards through workflow stages
-- Assign appropriately (bot vs human)
+- Assign appropriately (self vs human)
 - Close cards when truly complete
 - Update steps as you progress
 
@@ -316,13 +306,12 @@ EOF
 git checkout -b feat/short-description
 
 # 1. Get board and column info
-BOARD_ID=$(fizzy board list | jq -r '.data[0].id')
-DOING_COL=$(fizzy column list --board $BOARD_ID | jq -r '.data[] | select(.name == "Doing") | .id')
-BOT_USER=$(fizzy identity show | jq -r '.accounts[0].user.id')
+BOARD_ID=$(fizzy board list --jq '.data[0].id')
+DOING_COL=$(fizzy column list --board $BOARD_ID --jq '.data[] | select(.name == "Doing") | .id')
 
 # 2. Start the card
 fizzy card column 15 --column $DOING_COL
-fizzy card assign 15 --user $BOT_USER
+fizzy card self-assign 15
 
 # 3. Work and mark steps
 fizzy step update STEP_1_ID --card 15 --completed
@@ -346,7 +335,7 @@ fizzy card close 15
 ```bash
 # 1. Start
 fizzy card column 20 --column <doing_col_id>
-fizzy card assign 20 --user <bot_user_id>
+fizzy card self-assign 20
 
 # 2. Work (no steps to update)
 # ... implementation ...
@@ -360,7 +349,7 @@ fizzy card close 20
 ### Pattern: Delegate to Human
 ```bash
 # Find human user
-HUMAN_USER=$(fizzy user list | jq -r '.data[] | select(.role == "owner") | .id')
+HUMAN_USER=$(fizzy user list --jq '.data[] | select(.role == "owner") | .id')
 
 # Assign and explain
 fizzy card assign 26 --user $HUMAN_USER
