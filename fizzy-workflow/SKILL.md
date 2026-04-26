@@ -66,12 +66,25 @@ This skill also depends on the **base `fizzy` skill** for raw Fizzy CLI operatio
 
 **Steps:**
 1. Get card details: `fizzy card show CARD_NUMBER`
-2. Find "Doing" column ID: `fizzy column list --board BOARD_ID`
-3. Move to "Doing" column: `fizzy card column CARD_NUMBER --column <doing_column_id>`
-4. Assign to bot/self: `fizzy card assign CARD_NUMBER --user <bot_user_id>`
+2. Check current git branch:
+   - If on `main`/`master`: checkout a new feature branch named after the feature (e.g. `feat/short-description`) — **never include card/fizzy numbers in branch names**
+   - If on an existing feature branch: confirm with the user whether this branch is relevant to the card before continuing
+   - It's acceptable to work on multiple cards in the same branch, but each card **must be committed separately**
+3. Find "Doing" column ID: `fizzy column list --board BOARD_ID`
+4. Move to "Doing" column: `fizzy card column CARD_NUMBER --column <doing_column_id>`
+5. Assign to bot/self: `fizzy card assign CARD_NUMBER --user <bot_user_id>`
 
 **Example:**
 ```bash
+# Get card details
+fizzy card show 15
+
+# Check branch and prepare
+git branch --show-current
+# If on main/master:
+git checkout -b feat/short-description
+# If on a feature branch that may not be relevant: STOP and confirm with user
+
 # Get column IDs
 fizzy column list --board BOARD_ID | jq '.data[] | {id: .id, name: .name}'
 
@@ -151,16 +164,35 @@ EOF
 - `test`: Adding tests
 - `chore`: Maintenance tasks
 
-#### Step 2: Get Commit Hash and Repo URL
+#### Step 2: Land changes into main branch
+
+**The card must only be closed after changes are in `main`/`master`.** Infer the right approach from context, or ask the user if unclear:
+
+**Option A — Create PR/MR for review** (preferred for team projects or when changes need review):
+```bash
+git push origin <branch>
+# Then create a PR/MR via gh, glab, or the platform's CLI
+gh pr create --title "feat: short description" --body "..."
+```
+Wait for the PR/MR to be merged before proceeding to close the card.
+
+**Option B — Merge directly to main** (for solo projects or pre-approved changes):
+```bash
+git checkout main
+git merge --no-ff <branch>   # NEVER fast-forward
+git push origin main
+```
+
+#### Step 3: Get Commit Hash and Repo URL
 ```bash
 COMMIT_HASH=$(git log -1 --format="%H")
 REPO_URL=$(git remote get-url origin | sed 's/git@github.com:/https:\/\/github.com\//' | sed 's/\.git$//')
 ```
 
-#### Step 3: Post Completion Comment
+#### Step 4: Post Completion Comment
 ```bash
 fizzy comment create --card NUMBER --body "$(cat <<'EOF'
-<p>✅ Completed and committed to GitHub</p>
+<p>✅ Completed and merged to main</p>
 <p><br></p>
 <p>Commit: <a href="REPO_URL/commit/COMMIT_HASH">SHORT_HASH</a></p>
 <p><br></p>
@@ -174,7 +206,7 @@ EOF
 )"
 ```
 
-#### Step 4: Close Card
+#### Step 5: Close Card
 ```bash
 fizzy card close CARD_NUMBER
 ```
@@ -280,6 +312,9 @@ EOF
 
 ### Pattern: Multi-Step Card Workflow
 ```bash
+# 0. Prepare branch (from main/master)
+git checkout -b feat/short-description
+
 # 1. Get board and column info
 BOARD_ID=$(fizzy board list | jq -r '.data[0].id')
 DOING_COL=$(fizzy column list --board $BOARD_ID | jq -r '.data[] | select(.name == "Doing") | .id')
