@@ -407,10 +407,18 @@ fizzy comment create --card 12 --body "<p>✅ Steps 1-3 complete</p>"
 
 ---
 
-## Helper Script
+## Helper Scripts
 
-Use `scripts/fizzy-context.sh BOARD_ID` to quickly get project-specific IDs:
+### `scripts/fizzy-context.sh <board_id>`
+Get column IDs and git remote for a board — run this before starting a card to look up the "Doing" column ID.
 
 ```bash
 bash fizzy-workflow/scripts/fizzy-context.sh <board_id>
+```
+
+### `scripts/fizzy-open-cards.sh <board_id>`
+List all open cards on a board with number, title, and current assignees — useful for picking what to work on next.
+
+```bash
+bash fizzy-workflow/scripts/fizzy-open-cards.sh <board_id>
 ```
