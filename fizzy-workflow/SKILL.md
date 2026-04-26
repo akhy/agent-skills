@@ -118,7 +118,10 @@ On failure (e.g. mid-way through), `partial` is included so the agent knows what
 **When:** Beginning work on a new card
 
 **Steps:**
-1. Get card details: `fizzy card show CARD_NUMBER`
+1. Read the card thoroughly:
+   - `fizzy card show CARD_NUMBER` — title, description, tags, steps
+   - `fizzy comment list --card CARD_NUMBER` — full comment history
+   - Understand all requirements, context, and prior discussion before doing anything else
 2. Check current git branch:
    - If on `main`/`master`: checkout a new feature branch named after the feature (e.g. `feat/short-description`) — **never include card/fizzy numbers in branch names**
    - If on an existing feature branch: confirm with the user whether this branch is relevant to the card before continuing
@@ -129,8 +132,9 @@ On failure (e.g. mid-way through), `partial` is included so the agent knows what
 
 **Example:**
 ```bash
-# Get card details
+# Read card thoroughly
 fizzy card show 15
+fizzy comment list --card 15
 
 # Check branch and prepare
 git branch --show-current
