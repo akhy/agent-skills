@@ -83,6 +83,11 @@ This skill also depends on the **base `fizzy` skill** for raw Fizzy CLI operatio
 
 `description`, `tags`, and `steps` are optional per card. Before assigning tags, run `fizzy tag list` to see existing ones — **prefer reusing existing tags** over creating new ones to avoid duplicates.
 
+If a card depends on another card, note it clearly in the description, e.g.:
+```
+Depends on: #42 (Set up authentication)
+```
+
 **Example:**
 ```bash
 # Dry-run first to verify
@@ -359,6 +364,7 @@ EOF
 - Update steps as you progress
 - Add relevant tags to cards for discoverability
 - Run `fizzy tag list` and reuse existing tags before creating new ones
+- Note dependencies on other cards in the description (`Depends on: #N`)
 
 ❌ **DON'T:**
 - Leave cards in wrong columns
@@ -366,6 +372,7 @@ EOF
 - Forget to assign cards
 - Skip step updates
 - Create duplicate or near-duplicate tags
+- Start a card before its dependencies are complete
 
 ---
 
