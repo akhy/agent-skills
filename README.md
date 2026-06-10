@@ -37,3 +37,5 @@ npx skills add akhy/agent-skills --list
 | [go-release](./go-release/SKILL.md) | Set up automated releases for Go CLI apps using GoReleaser, GitHub Actions, GHCR, and Homebrew tap |
 | [agent-friendly-cli](./agent-friendly-cli/SKILL.md) | Author or audit AI agent-friendly CLI tools — structured output, exit codes, idempotency, dry-run, and more |
 | [vikunja-vja](./vikunja-vja/SKILL.md) | Manage Vikunja tasks via VJA CLI — create, list, update, delete tasks, with assignment, priority, and labeling |
+| [glab-mr](./glab-mr/SKILL.md) | Reviews a GitLab Merge Request using glab CLI. Fetches MR metadata, checks out the branch, diffs the changes, and performs a thorough code review |
+
