@@ -60,21 +60,29 @@ This puts the working tree on the MR branch so files can be read in full context
 
 ### 4. Diff the changes
 
+For large MRs or MRs containing generated files, first identify which files are handwritten versus auto-generated (e.g. lockfiles like `yarn.lock`, compiled JS/CSS bundles, mocks like `*_mock.go`, protobuf files `*.pb.go`, generated documentation, or Helm templates generated from charts). 
+
+Use `git diff --name-only` or view the MR file list to identify the files.
+
+Then diff the changes:
+
 ```bash
 glab mr diff <MR_NUMBER>
 ```
 
-Read every hunk carefully. Build a mental model of:
+Read every hunk in the handwritten files carefully. Skip generated or vendor files. Build a mental model of:
 - What the MR intends to do
 - Which files are changed and how they relate to each other
 
 ### 5. Read changed files in full context
 
-After reviewing the diff, read the **complete** versions of the changed files
+After reviewing the diff, read the **complete** versions of the changed handwritten files
 (not just the diff hunks) using the `view` tool. This reveals:
 - Logic that surrounds the change
 - Other code paths that interact with the modified sections
 - Existing patterns the change should be consistent with
+
+Do not spend time reading or opening generated files in full context.
 
 Also read closely related files (e.g. interfaces, types, tests, configs,
 schemas, sibling modules) even if they were not changed, to understand the
@@ -148,5 +156,8 @@ trivial matters.
 - `glab` must be authenticated and the remote must be reachable.
 - After `glab mr checkout`, the repo is on the MR branch. Remind the user to
   switch back (`git checkout main` or similar) when done if needed.
-- For very large MRs (50+ files), focus the full-context reads on the files
-  most central to the change rather than every touched file.
+- **Handling Large MRs & Generated Files:**
+  - For very large MRs (50+ files), focus the full-context reads on the files most central to the change rather than every touched file.
+  - If the diff output of `glab mr diff` is too large or cluttered, run native git commands to exclude generated files, e.g.:
+    `git diff origin/main...HEAD -- . ':(exclude)*.lock' ':(exclude)*.pb.go' ':(exclude)*_mock.go'`
+  - Completely ignore lockfiles, generated mock files, and compiled assets during code review.
