@@ -23,11 +23,21 @@ Use this skill when the user says things like:
 - "review MR 92"
 - "check MR !42"
 - "look at merge request 15"
+- "review my open MRs"
+- "check my MR"
 - provides a GitLab MR URL
 
 ## Workflow
 
-### 1. Fetch MR metadata
+### 1. Identify MR Number & Fetch Metadata
+
+If the user does not specify a Merge Request number, list all open Merge Requests:
+
+```bash
+glab mr list
+```
+
+Identify or ask the user to clarify which MR to review. Once the MR number is known, fetch the MR metadata:
 
 ```bash
 glab mr show <MR_NUMBER>
